@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/go-kit/kit/endpoint"
+	"net/http"
 )
 
 // Запросы и ответы
@@ -16,7 +18,7 @@ type uppercaseRequest struct {
 
 type uppercaseResponse struct {
 	V   string `json:"v"`
-	Err string `json:"err,omitempty"` // errors don't define JSON marshaling
+	Err string `json:"err,omitempty"`
 }
 
 type countRequest struct {
@@ -50,4 +52,24 @@ func makeCountEndpoint(svc StringService) endpoint.Endpoint {
 		v := svc.Count(req.S)
 		return countResponse{v}, nil
 	}
+}
+
+func decodeUppercaseRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	var request uppercaseRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		return nil, err
+	}
+	return request, nil
+}
+
+func decodeCountRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	var request countRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		return nil, err
+	}
+	return request, nil
+}
+
+func encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+	return json.NewEncoder(w).Encode(response)
 }
