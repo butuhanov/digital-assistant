@@ -1,10 +1,12 @@
-package main
+package endpoints
 
 import (
 	"context"
 	"encoding/json"
 	"github.com/go-kit/kit/endpoint"
 	"net/http"
+
+	"github.com/butuhanov/digital-assistant/services/stringsvc"
 )
 
 // Запросы и ответы

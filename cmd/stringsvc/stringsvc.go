@@ -10,6 +10,10 @@ import (
 	"github.com/go-kit/kit/log"
 	//kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 	httptransport "github.com/go-kit/kit/transport/http"
+
+	// "github.com/butuhanov/digital-assistant/services/stringsvc/transport"
+	// "github.com/butuhanov/digital-assistant/services/stringsvc"
+
 )
 
 func main() {
